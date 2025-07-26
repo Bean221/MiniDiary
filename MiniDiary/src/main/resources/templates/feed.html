@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Feed</title>
+</head>
+<body>
+<h2>Feed</h2>
+<a th:href="@{/logout}">Logout</a>
+<ul>
+    <li th:each="post : ${posts}">
+        <b th:text="${post.title}"></b> - <span th:text="${post.user.username}"></span>
+        <p th:text="${post.body}"></p>
+        <hr/>
+    </li>
+</ul>
+</body>
+</html> 
