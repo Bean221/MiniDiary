@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Feed</title>
+    <title>Trang chủ</title>
+    <link rel="stylesheet" th:href="@{/css/feed.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 <body>
-<h2>Feed</h2>
-<a th:href="@{/logout}">Logout</a>
-<ul>
-    <li th:each="post : ${posts}">
-        <b th:text="${post.title}"></b> - <span th:text="${post.user.username}"></span>
-        <p th:text="${post.body}"></p>
-        <hr/>
-    </li>
-</ul>
+    <div th:replace="header :: mainHeader"></div>
+    <main class="main-content">
+        <!-- Nội dung chính sẽ hiển thị ở đây -->
+        <div class="card post-card">
+            <div class="post-header">
+                <img class="post-avatar" src="https://i.pravatar.cc/36?img=5" alt="avatar" />
+                <div>
+                    <div class="post-user">Nguyễn Minh An</div>
+                </div>
+            </div>
+            <div class="post-body">
+                Đây là một bài viết mẫu. Bạn có thể thêm nội dung động ở đây.
+            </div>
+        </div>
+    </main>
+    <div th:replace="footer :: mainFooter"></div>
 </body>
 </html> 
