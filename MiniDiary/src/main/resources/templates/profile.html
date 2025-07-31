@@ -1,0 +1,49 @@
+<th:block th:fragment="mainHeader">
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <header class="main-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <span class="logo"><i class="fa-solid fa-book-open"></i> MiniDiary</span>
+            </div>
+            <nav class="header-center">
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" title="Nhật ký"><i class="fa-solid fa-house"></i></a></li>
+                    <li><a href="#" class="nav-link" title="Đang theo dõi"><i class="fa-solid fa-users"></i></a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="avatar-dropdown">
+                    <div class="avatar" title="Tài khoản" id="avatarBtn">
+                        <img src="https://i.pravatar.cc/36?img=3" alt="avatar" />
+                    </div>
+                    <div class="dropdown-menu" id="avatarDropdown">
+                        <a th:href="@{/profile}" class="dropdown-item">Trang cá nhân</a>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <script>
+        document.addEventListener('click', e => {
+            // Nav icon active
+            if (e.target.closest('.nav-link')) {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                e.target.closest('.nav-link').classList.add('active');
+                e.preventDefault();
+            }
+            // Avatar dropdown
+            const avatarBtn = document.getElementById('avatarBtn');
+            const dropdown = document.getElementById('avatarDropdown');
+            if (avatarBtn && dropdown) {
+                if (avatarBtn.contains(e.target)) {
+                    dropdown.classList.toggle('show');
+                } else if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+    </script>
+</th:block>
