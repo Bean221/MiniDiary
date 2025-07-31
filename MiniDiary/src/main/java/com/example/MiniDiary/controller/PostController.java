@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,18 +33,17 @@ public class PostController {
     public String feed(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) return "redirect:/login";
-        List<Post> feedPosts = new ArrayList<>();
-        // Bài viết của mình
-        feedPosts.addAll(postRepository.findByUser(user));
-        // Bài viết của người mình theo dõi
+        List<Post> feedPosts = postRepository.findAll();
         List<Follow> follows = followRepository.findAll();
-        for (Follow f : follows) {
-            if (f.getFollowingUser().getId().equals(user.getId())) {
-                feedPosts.addAll(postRepository.findByUser(f.getFollowedUser()));
-            }
-        }
+        // Lấy danh sách userId đã follow
+        Set<Integer> followedUserIds = follows.stream()
+            .filter(f -> f.getFollowingUser().getId().equals(user.getId()))
+            .map(f -> f.getFollowedUser().getId())
+            .collect(Collectors.toSet());
         model.addAttribute("posts", feedPosts);
         model.addAttribute("now", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        model.addAttribute("followedUserIds", followedUserIds);
+        session.setAttribute("lastPage", "/feed");
         return "feed";
     }
 
