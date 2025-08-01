@@ -1,0 +1,16 @@
+/* Footer Styles */
+.main-footer {
+    background: #fff;
+    border-top: 1.5px solid #e5e7eb;
+    text-align: center;
+    padding: 14px 0 10px 0;
+    font-size: 1rem;
+    color: #4f8cff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 -2px 12px rgba(80, 112, 255, 0.04);
+}
+.app-name {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+} 
