@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Theo dõi</title>
+    <link rel="stylesheet" th:href="@{/css/feed.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+<body>
+    <div th:replace="header :: mainHeader"></div>
+    <main class="main-content">
+        <!-- Tiêu đề trang -->
+        <div class="card post-card" style="text-align: center; background: linear-gradient(90deg, #4f8cff 60%, #6a82fb 100%); color: white; margin-bottom: 20px;">
+            <h2 style="margin: 20px 0; font-size: 1.5rem;">
+                <i class="fa-solid fa-user-group"></i> Bài viết từ người bạn theo dõi
+            </h2>
+        </div>
+
+        <!-- Hiển thị thông báo nếu không có bài viết -->
+        <div th:if="${#lists.isEmpty(posts)}" class="card post-card" style="text-align: center; padding: 40px;">
+            <i class="fa-solid fa-heart-crack" style="font-size: 3rem; color: #bdc3c7; margin-bottom: 16px;"></i>
+            <h3 style="color: #7f8c8d; margin-bottom: 8px;">Chưa có bài viết nào</h3>
+            <p style="color: #95a5a6; margin: 0;">Những người bạn theo dõi chưa đăng bài viết nào ở chế độ bạn bè</p>
+        </div>
+
+        <!-- Danh sách bài viết -->
+        <div th:each="post : ${posts}" class="card post-card">
+            <div class="post-header">
+                <img class="post-avatar" src="https://i.pravatar.cc/36?u=" th:src="@{'https://i.pravatar.cc/36?u=' + ${post.user.username}}" alt="avatar" />
+                <div>
+                    <div class="post-user">
+                        <a th:href="@{'/profile/' + ${post.user.username}}" style="color:inherit; text-decoration:none; font-weight:600;" th:text="${post.user.username}">Tên người dùng</a>
+                        <!-- Nút Unfollow (vì đã theo dõi rồi) -->
+                        <form th:action="@{/unfollow}" method="post" style="display:inline; margin-left:8px;">
+                            <input type="hidden" name="userId" th:value="${post.user.id}" />
+                            <button type="submit" style="background:#e74c3c; color:#fff; border:none; border-radius:6px; padding:2px 10px; font-size:0.95rem; cursor:pointer;">Bỏ theo dõi</button>
+                        </form>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div class="post-time" th:text="${#dates.format(post.createdAt, 'dd/MM/yyyy HH:mm')}">Thời gian</div>
+                        <!-- Chỉ hiển thị icon bạn bè vì tất cả bài viết ở đây đều là friends -->
+                        <span title="Bạn bè" style="color: #27ae60;"><i class="fa-solid fa-user-group"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-body">
+                <div style="font-weight: bold; color: #2563eb; margin-bottom: 4px;" th:text="${post.title}">Tiêu đề</div>
+                <div th:text="${post.body}">Nội dung</div>
+            </div>
+        </div>
+    </main>
+    <div th:replace="footer :: mainFooter"></div>
+</body>
+</html>
