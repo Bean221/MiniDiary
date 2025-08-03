@@ -20,6 +20,7 @@ import com.example.MiniDiary.entity.User;
 import com.example.MiniDiary.repository.FollowRepository;
 import com.example.MiniDiary.repository.PostRepository;
 
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -33,7 +34,8 @@ public class PostController {
     public String feed(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) return "redirect:/login";
-        List<Post> feedPosts = postRepository.findAll();
+        // Chỉ lấy bài viết công khai
+        List<Post> feedPosts = postRepository.findByStatus("public");
         List<Follow> follows = followRepository.findAll();
         // Lấy danh sách userId đã follow
         Set<Integer> followedUserIds = follows.stream()
@@ -43,6 +45,8 @@ public class PostController {
         model.addAttribute("posts", feedPosts);
         model.addAttribute("now", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
         model.addAttribute("followedUserIds", followedUserIds);
+        model.addAttribute("activePage", "feed");
+        model.addAttribute("activePage", "feed");
         session.setAttribute("lastPage", "/feed");
         return "feed";
     }
@@ -64,4 +68,28 @@ public class PostController {
         postRepository.save(post);
         return "redirect:/feed";
     }
+    @GetMapping("/following")
+    public String followingPage(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) return "redirect:/login";
+
+        List<Follow> follows = followRepository.findAll();
+        Set<Integer> followedUserIds = follows.stream()
+            .filter(f -> f.getFollowingUser().getId().equals(user.getId()))
+            .map(f -> f.getFollowedUser().getId())
+            .collect(Collectors.toSet());
+
+        // Lấy post của người được follow, chỉ status == 'friends'
+        List<Post> friendPosts = postRepository.findAll().stream()
+            .filter(p -> "friends".equals(p.getStatus()) && followedUserIds.contains(p.getUser().getId()))
+            .collect(Collectors.toList());
+
+        model.addAttribute("posts", friendPosts);
+        model.addAttribute("activePage", "following");
+        session.setAttribute("lastPage", "/following");
+
+        return "following";
+    }
+
+    
 }
