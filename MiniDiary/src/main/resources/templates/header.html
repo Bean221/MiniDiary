@@ -7,8 +7,12 @@
             </div>
             <nav class="header-center">
                 <ul class="nav-menu">
-                    <li><a href="#" class="nav-link active" title="Nhật ký"><i class="fa-solid fa-house"></i></a></li>
-                    <li><a href="#" class="nav-link" title="Đang theo dõi"><i class="fa-solid fa-users"></i></a></li>
+                    <li><a th:href="@{/feed}" th:classappend="${activePage} == 'feed' ? 'active' : ''" class="nav-link" title="Nhật ký">
+    <i class="fa-solid fa-house"></i>
+</a></li>
+                    <li><a th:href="@{/following}" th:classappend="${activePage} == 'following' ? 'active' : ''" class="nav-link" title="Đang theo dõi">
+    <i class="fa-solid fa-users"></i>
+</a></li>
                 </ul>
             </nav>
             <div class="header-right">
@@ -27,23 +31,28 @@
         </div>
     </header>
     <script>
-        document.addEventListener('click', e => {
-            // Nav icon active
-            if (e.target.closest('.nav-link')) {
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                e.target.closest('.nav-link').classList.add('active');
+    document.addEventListener('click', e => {
+        const navLink = e.target.closest('.nav-link');
+        if (navLink) {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            navLink.classList.add('active');
+            
+            // ❌ Đừng ngăn chặn chuyển trang nếu href != '#'
+            if (navLink.getAttribute('href') === '#') {
                 e.preventDefault();
             }
-            // Avatar dropdown
-            const avatarBtn = document.getElementById('avatarBtn');
-            const dropdown = document.getElementById('avatarDropdown');
-            if (avatarBtn && dropdown) {
-                if (avatarBtn.contains(e.target)) {
-                    dropdown.classList.toggle('show');
-                } else if (!dropdown.contains(e.target)) {
-                    dropdown.classList.remove('show');
-                }
+        }
+
+        const avatarBtn = document.getElementById('avatarBtn');
+        const dropdown = document.getElementById('avatarDropdown');
+        if (avatarBtn && dropdown) {
+            if (avatarBtn.contains(e.target)) {
+                dropdown.classList.toggle('show');
+            } else if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
             }
-        });
+        }
+    });
+
     </script>
 </th:block>
