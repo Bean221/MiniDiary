@@ -9,6 +9,5 @@ import com.example.MiniDiary.entity.User;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findByUser(User user);
-
-	List<Post> findByStatus(String status);
+	List<Post> findByStatus(String status); 
 }
