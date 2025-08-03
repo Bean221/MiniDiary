@@ -1,0 +1,188 @@
+body {
+    background: linear-gradient(135deg, #e0e7ff 0%, #f5f6fa 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.profile-container {
+    background: #fff;
+    padding: 36px 32px 28px 32px;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(80, 112, 255, 0.10), 0 1.5px 8px rgba(0,0,0,0.04);
+    min-width: 340px;
+    max-width: 800px;
+    margin: 0px auto 0 auto;
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #4f8cff;
+    box-shadow: 0 2px 12px rgba(80, 112, 255, 0.13);
+    margin-bottom: 18px;
+    object-fit: cover;
+}
+.profile-info {
+    text-align: center;
+    margin-bottom: 18px;
+}
+.profile-info .username {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 4px;
+}
+.profile-info .role {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 2px;
+}
+.profile-info .created {
+    font-size: 0.98rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 18px;
+}
+.profile-stat {
+    text-align: center;
+}
+.profile-stat .stat-number {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2563eb;
+}
+.profile-stat .stat-label {
+    font-size: 0.98rem;
+    color: #888;
+}
+.profile-following-list {
+    background: #f8faff;
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-bottom: 18px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 1px 6px rgba(80,112,255,0.07);
+}
+.profile-following-list .following-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.profile-following-list .following-user:last-child {
+    margin-bottom: 0;
+}
+.profile-following-list .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1.5px solid #4f8cff;
+}
+.profile-following-list .username {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+.profile-following-list .unfollow-btn {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.profile-posts-title {
+    text-align: center;
+    color: #4f8cff;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.profile-post-card {
+    background: #f8faff;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 8px rgba(80,112,255,0.06);
+    position: relative;
+    transition: box-shadow 0.18s;
+}
+.profile-post-card:hover {
+    box-shadow: 0 4px 16px rgba(80,112,255,0.13);
+}
+.profile-post-title {
+    font-weight: bold;
+    color: #2563eb;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+.profile-post-body {
+    color: #222;
+    margin-bottom: 4px;
+}
+.profile-post-meta {
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 2px;
+}
+.edit-btn, .delete-btn {
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0;
+    margin-right: 6px;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    box-shadow: 0 2px 8px rgba(80, 112, 255, 0.08);
+}
+.edit-btn {
+    background: #4285f4;
+    color: #fff;
+}
+.edit-btn:hover {
+    background: #2563eb;
+}
+.delete-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+.delete-btn:hover {
+    background: #c0392b;
+}
+.profile-posts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+}
+@media (max-width: 700px) {
+    .profile-posts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 600px) {
+    .profile-container {
+        min-width: 98vw;
+        max-width: 99vw;
+        padding: 16px 4vw 12px 4vw;
+    }
+    .profile-following-list {
+        max-width: 98vw;
+        padding: 10px 2vw;
+    }
+} 
